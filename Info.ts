@@ -2,7 +2,7 @@
 import { GameInfoType } from './src/types/GameInfoType.ts';
 
 export const Info: GameInfoType = {
-    title: 'This Cave is Trying to Kill You',
+    title: 'Write Love at the End',
     author: 'spaceflounder',
     authorEmail: 'spaceflounder@hotmail.com',
     firstRoom: 'Intro',

@@ -8,7 +8,6 @@ type responseMatrixType = {
     'Hint': string,
     'Do': string,
     'Talk': string,
-    'Pick Up': string,
 }
 
 
@@ -18,21 +17,18 @@ export const BuildCommonResponses = (r: responseMatrixType) => {
         ['!', 'Hint'],
         ['1', 'Do'],
         ['2', 'Talk'],
-        ['3', 'Pick Up'],
     ];
 
     for (const verb of verbs) {
         const [key, preview] = verb;
-        if (key !== '1') {
-            hookUseCommand(key, '', () => r[preview]);
-        } else {
+        if (preview) {
             hookUseCommand(key, preview, () => r[preview]);
         }
     }
 
     hookUseCommand('@', `About`, () => `About this game`);
     hookUseCommand('#', `Score`, () => `You have no points.`);
-    hookUseCommand('4', ``, () => {
+    hookUseCommand('3', `Look`, () => {
         const room = getCurrentRoom();
         return contents[room](useGame());
     });

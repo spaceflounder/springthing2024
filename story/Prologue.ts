@@ -7,22 +7,21 @@ export default () => {
         Hint: `There are no hints available here at the present.`,
         Talk: `You talk to yourself for a moment, and have a pleasant conversation`,
         Do: `That accomplishes nothing.`,
-        'Pick Up':`There's nothing here to take.`,
     });
 
-    useNav('w', () => {
+    useNav('w', 'Deep Woods', () => {
         sendTo('InTheDeepWoods')
     });
 
-    useNav('s', () => {
+    useNav('s', 'Village', () => {
         sendTo('InTheVillage')
     });
 
-    useNav('a', () => {
+    useNav('a', 'Otter', () => {
         sendTo('WithBullworth')
     });
 
-    useNav('d', () => {
+    useNav('d', 'Meadow', () => {
         sendTo('InTheMeadow')
     });
 

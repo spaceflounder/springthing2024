@@ -16,6 +16,7 @@ export class GameClass {
     score = 0;
     // deno-lint-ignore no-explicit-any
     hasSaid: any = {}
+    commonTopics: string[] = [];
 
 }
 

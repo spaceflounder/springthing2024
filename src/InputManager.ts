@@ -11,15 +11,21 @@ import { CommandType } from "./types/CommandType.ts";
 let permitInput = true;
 
 
-const graphic: { [key: string]: string }  = {
+const alternate: { [key: string]: string } = {
+    '1': '<span class="material-symbols-rounded">check</span>',
+    '2': '<span class="material-symbols-rounded">back_hand</span>',
+}
+
+
+const graphic: { [key: string]: string } = {
     'w': '<span class="material-symbols-rounded">arrow_upward_alt</span>',
     's': '<span class="material-symbols-rounded">arrow_downward_alt</span>',
     'a': '<span class="material-symbols-rounded">arrow_left_alt</span>',
     'd': '<span class="material-symbols-rounded">arrow_right_alt</span>',
     '1': '<span class="material-symbols-rounded">back_hand</span>',
     '2': '<span class="material-symbols-rounded">chat</span>',
-    '3': '<span class="material-symbols-rounded">keyboard_return</span>',
-    '4': '<span class="material-symbols-rounded">search</span>',
+    '3': '<span class="material-symbols-rounded">search</span>',
+    '4': '<span class="material-symbols-rounded">visibility</span>',
     '5': '<span class="material-symbols-rounded">chat</span>',
     '6': '<span class="material-symbols-rounded">chat</span>',
     '7': '<span class="material-symbols-rounded">chat</span>',
@@ -118,7 +124,11 @@ function createCommandKeyIcons(c: CommandType) {
     const first = document.createElement('div');
     second.className = 'command-key';
     first.className = 'command-key';
-    second.innerHTML = graphic[k];
+    if (c.preview === 'Continue' || c.preview === 'Cancel') {
+        second.innerHTML = alternate[k];
+    } else {
+        second.innerHTML = graphic[k];
+    }
     first.innerHTML = `${k}`;
     inner.className = 'inner-key-wrapper';
     inner.append(second);

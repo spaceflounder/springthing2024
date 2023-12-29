@@ -17,14 +17,21 @@ export { useGame } from './src/GameManager.ts';
 
 export { youAreDead } from './src/GameOver.ts';
 
+export { shuffle } from './src/rng.js';
+
+export { 
+    hookTopics as useTopics,
+    hookApplyTopics as setTopics
+} from './src/Topics.ts';
+
 export { 
     compareTokens,
     hasSaid,
     enableCaptureMode as useCapture
 } from './src/Parser.ts';
 
-export function useNav(direction: string, callback: (g: Game) => string | void) {
-    hookUseCommand(direction, '', callback);
+export function useNav(direction: string, location: string, callback: (g: Game) => string | void) {
+    hookUseCommand(direction, location, callback);
 }
 
 
