@@ -1,4 +1,4 @@
-import { caps, sendTo, shuffle, useCapture, useMatrix, useNav, useTalk } from "@infodom";
+import { caps, sendTo, setTopics, shuffle, useCapture, useDo, useMatrix, useNav, useRefresh, useTalk, useTopics } from "@infodom";
 import { useGame } from "../../src/GameManager.ts";
 
 
@@ -8,21 +8,15 @@ const notMet = () => {
     g.bullworth = 'Bullworth';
     g.theBullworth = 'Bullworth';
 
+    setTopics(['mom', 'jungle']);
+
     return `
 
-"Who are you?" I asked. "I've never met a talking toucan before."
+"I'm Bryan," I said. "Pleased to meet you, Mr. Lion."
 
-"Well, this is a special place," said the toucan. "My name is Quentin."
+"You can call me Bullworth," said the lion. "Pleased to meet you, too.
+Your mother taught you good manners."
 
-"I'm Bryan," I said. I'd noticed for the first time that my clothes were
-the same as I was wearing in bed.
-
-:::aside
-You might ask next about the :kbd[hospital], or the :kbd[jungle]. During a
-conversation you can discuss topics in any order, or discuss previous topics
-to see the dialogue again.
-:::
-    
     `
 
 }
@@ -51,6 +45,73 @@ const lion = () => {
 }
 
 
+const telescope = () => {
+
+    const g = useGame();
+
+    return `
+
+"I found this telescope--" I started.
+    
+"That's for you," ${g.theBullworth} interjected. "You may keep it."
+
+"Thank you," I said.
+
+`
+
+}
+
+
+const jungle = () => {
+
+    const g = useGame();
+    setTopics(['mom']);
+
+    return `
+
+"What is this place?" I asked.
+    
+${caps(g.theBullworth)} waved his paws in the air. "The jungle, of course.
+What'd you think it was, a barbershop?"
+
+`
+
+}
+
+
+const hospital = () => {
+
+    const g = useGame();
+    setTopics(['mom', 'jungle']);
+
+
+    return `
+
+"Do you know how I can get back to the hospital?" I asked.
+
+"I don't even know what that is," said ${g.theBullworth}. 
+
+`
+
+}
+
+
+const mom = () => {
+
+    const g = useGame();
+
+    return `
+
+"Do you know where my mom is?" I asked.
+    
+"Sorry, little one," said ${g.theBullworth}. "But if she's anything like
+you, she's out looking for you too."
+
+`
+
+}
+
+
 
 const talk = () => {
 
@@ -60,6 +121,7 @@ const talk = () => {
         lion,
         jungle,
         hospital,
+        telescope,
         mom,
     }, () => `
         
@@ -67,6 +129,12 @@ const talk = () => {
         
 `
     ));
+
+    if (g.theBullworth !== 'Bullworth') {
+        g.commonTopics.push('lion');
+    }
+
+    const topics = useTopics();
 
     const response = shuffle([
         `${caps(g.theBullworth)} turned his head and yawned`,
@@ -78,19 +146,43 @@ const talk = () => {
     
 ${response[0]}.
 
-:::aside
-You might type :kbd[lion], or :kbd[jungle].
-:::
+${topics}
     
     `
 }
+
+
+const telescopeMsg = `
+
+Buried in the mud was a glint of dirty brass. I rubbed away the
+dirt and unearthed an old telescope as a prize.
+
+:::aside
+You are now carrying the telescope.
+:::
+
+`
 
 export default function() {
 
     const g = useGame();
 
+    if (!g.telescope) {
+        useDo('Telescope', () => {
+            g.telescope = true;
+            useRefresh();
+            return telescopeMsg;
+        });
+    }
+
     useTalk(talk);
     useNav('a', 'Clearing', () => sendTo('Clearing'));
+
+    const firstTime = (g.theBullworth !== 'Bullworth') ? `
+    
+"Greetings, little one," said ${g.theBullworth}. "You look a bit lost."
+    
+    ` : '';
 
     const suffix = shuffle([
         `playing with a grasshopper`,
@@ -102,5 +194,7 @@ export default function() {
     
 Under the shadow of a big boulder sat ${g.bullworth}, ${suffix[0]}.
     
+${firstTime}
+
     `
 }

@@ -1,5 +1,5 @@
 import { useGame } from "../../src/GameManager.ts";
-import { useCapture, useTalk, useMatrix, caps, sendTo, useNav, shuffle, useTopics, hasSaid, setTopics } from "@infodom";
+import { useCapture, useTalk, useMatrix, caps, sendTo, useNav, shuffle, useTopics, hasSaid, setTopics, useDo } from "@infodom";
 
 
 const notMetToucan = () => {
@@ -108,7 +108,32 @@ const mom = () => {
     
 "She's probably at wherever you're from," said ${g.theQuentin}. "But don't
 fret. Mothers are never lost for long. Perhaps you should go find Madeline
-and ask her? She's a mother herself.
+and ask her? She's a mother herself."
+
+`
+
+}
+
+
+const telescope = () => {
+
+    const g = useGame();
+
+    if (!g.telescope) {
+
+        return `
+        
+You haven't picked that up yet.
+        
+        `
+
+    }
+
+    return `
+
+"${caps(g.theBullworth)} gave me this telescope," I said.
+    
+"Looks like he stuck it in the mud," said ${g.theQuentin}.
 
 `
 
@@ -123,6 +148,7 @@ const talk = () => {
         toucan,
         jungle,
         hospital,
+        telescope,
         mom,
     }, () => `
         
@@ -153,9 +179,19 @@ ${topics}
 }
 
 
+const telescopeMsg = (n: string) => `
+
+"You won't see anything from down here," said ${n}, watching me
+peer through the lens.
+
+`
+
+
 export default function() {
 
     const g = useGame();
+
+    (g.telescope) && useDo('Telescope', () => telescopeMsg(g.theQuentin));
 
     useNav('w', 'Clearing', () => sendTo('Clearing'));
 

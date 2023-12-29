@@ -13,10 +13,7 @@ export class Game extends GameClass implements GameClassInterface {
     theQuentin = 'the toucan';
     hasMetQuentin = false;
 
-    abbot = 'the ruffian';
-    abbotDesc = `A funny looking little ruffian with a 
-    crusty beard sits at a nearby table. His clothes--neon plaids and
-    sepia polka-dots--appear to be clashing on purpose.`
+    telescope = false;
 
     bullworth = 'a big, stocky lion';
     theBullworth = 'the lion';

@@ -22,6 +22,8 @@ export function getCommandList() {
 export function clearAllCommands() {
     commands = [];
     restrictedCommands = [];
+    const g = useGame();
+    g.commonTopics = [];
 }
 
 
